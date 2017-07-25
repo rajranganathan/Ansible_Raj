@@ -1,0 +1,18 @@
+---
+# tasks file for http
+    - name: Install HTTP and Web Components
+      yum: name={{item}} enablerepo=epel state=present update_cache=yes
+      with_items:
+        - httpd
+        - python-pip
+
+    - name: Ensure HTTP Started
+      service: name=httpd state=started enabled=yes
+
+   # - name: Ensure mod_wsgi enabled
+    #  apache2_module: state=present name=wsgi
+     # notify: restart httpd
+     #
+    - name: check date
+      shell: /usr/bin/date > /tmp/date.out 
+

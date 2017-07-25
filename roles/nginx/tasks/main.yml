@@ -1,0 +1,27 @@
+---
+# tasks file for nginx
+     - name: Install nginx
+       yum: name=nginx enablerepo=epel state=present update_cache=yes
+
+     - name: Ensure Nginx Started
+       service: name=nginx state=started enabled=yes
+
+     - name: Create nginx site directory
+       file: path="{{item}}" state=directory mode=0644
+       with_items:
+         - /etc/nginx/
+         - /etc/nginx/sites-available
+         - /etc/nginx/sites-enabled
+
+     - name: Configure Nginx Site
+       template: src=nginx.conf.j2 dest=/etc/nginx/sites-available/demo mode=0644
+       notify: restart nginx
+
+     - name: De-activate Default nginx site
+       file: path=/etc/nginx/sites-enabled/default state=absent
+       notify: restart nginx
+
+     - name: Activate Demo nginx site
+       file: src=/etc/nginx/sites-available/demo dest=/etc/nginx/sites-enabled/default state=link
+       #file: src=/etc/nginx/sites-available/demo dest=/etc/nginx/sites-available/default state=link
+       notify: restart nginx

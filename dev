@@ -1,0 +1,12 @@
+[webserver]
+ltest1
+ltest2
+
+[database]
+chefnode
+
+[loadbalancer]
+lbtest
+
+[controller]
+control ansible_connection=local

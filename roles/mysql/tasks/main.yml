@@ -1,0 +1,7 @@
+---
+# tasks file for mysql
+ - name: Install MySQL
+   yum: name=rh-mysql57-mysql-server enablerepo=centos-sclo-rh state=present update_cache=yes
+
+#     - name: Ensure MySQL started
+#       service: name=mysql state=started enable=yes

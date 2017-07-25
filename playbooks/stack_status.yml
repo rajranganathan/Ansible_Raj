@@ -1,0 +1,14 @@
+---
+ - hosts: control
+   tasks:
+    - name: Verify end-to-end response
+      uri: url=http://{{item}} return_content=yes
+      #with_items: groups.loadbalancer
+      with_items:
+           - lbtest
+           - demo
+      register: lb_index
+
+    - fail: msg="Index Failed to Return Content"
+      when: "'Test' not in item.content"
+      with_items: "{{lb_index.results}}"

@@ -1,0 +1,9 @@
+---
+# tasks file for control
+- name: Install Tools
+  yum: name={{item}} state=present update_cache=yes
+  with_items:
+    - curl
+- name: Check date
+  #command: date 
+  shell: /usr/bin/date >> /tmp/date.out
